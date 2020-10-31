@@ -1,12 +1,18 @@
+const {validationResult} = require('express-validator');
+
 const createUser = (req, res) => {
-  res.json({
+  const {name, email, password} = req.body;
+  return res.status(201).json({
     ok: true,
-    msg: 'register'
+    msg: 'register',
+    name,
+    email
   });
 };
 
 const userLogin = (req, res) => {
-  res.json({
+  const {email, password} = req.body;
+  return res.json({
     ok: true,
     msg: 'login'
   });
