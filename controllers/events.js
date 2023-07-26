@@ -1,5 +1,4 @@
 // const {validationResult} = require('express-validator');
-// const {generateJWT} = require('../helpers/jwt');
 
 const getEvents = (req, res) => {
   return res.status(200).json({
