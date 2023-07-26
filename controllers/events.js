@@ -73,12 +73,37 @@ const updateEvent = async (req, res) => {
   }
 };
 
-const deleteEvent = (req, res) => {
+const deleteEvent = async (req, res) => {
   const id = req.params.id;
-  return res.status(200).json({
-    ok: true,
-    msg: 'deleteEvent',
-  });
+  const uid = req.uid;
+  try {
+    // Verify that the event exists
+    const event = await Event.findById(id);
+    if (!event) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'No event was found with that id'
+      });
+    }
+    // Verify that the user is the creator
+    if (event.user.toString() !== uid) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'You do not have permissions to update this record'
+      });
+    }
+    // Delete event
+    await Event.findByIdAndDelete(id);
+    return res.status(200).json({
+      ok: true
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      msg: 'An error ocurred while working with the database'
+    });
+  }
 };
 
 module.exports = {
