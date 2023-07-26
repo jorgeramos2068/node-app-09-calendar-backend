@@ -1,4 +1,4 @@
-# Node.js App - Rest
+# Calendar App - Backend
 
 Node.js REST API for Calendar application that uses Express.
 
